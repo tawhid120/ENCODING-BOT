@@ -7,7 +7,7 @@ import os
 from pyrogram import Client
 from pyrogram.types import CallbackQuery
 
-from .. import app, download_dir, log, owner, sudo_users, LOGGER
+from .. import app, download_dir, log, LOGGER
 from ..plugins.queue import queue_answer
 from ..utils.database.access_db import db
 from ..utils.settings import (AudioSettings, ExtraSettings, OpenSettings,
@@ -312,13 +312,6 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
                 with open(status, 'r+') as f:
                     statusMsg = json.load(f)
                     user = cb.from_user.id
-                    if user != statusMsg['user']:
-                        if user == 885190545:
-                            pass
-                        elif user in sudo_users or user in owner:
-                            pass
-                        else:
-                            return
                     statusMsg['running'] = False
                     f.seek(0)
                     json.dump(statusMsg, f, indent=2)
