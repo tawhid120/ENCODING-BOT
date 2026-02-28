@@ -11,7 +11,7 @@ from . import (direct_link_generator, display_progress, encoding, helper,
 LOGGER.info('Imported Utils!')
 
 sauce = '''<b>VideoEncoder - a telegram bot for compressing/encoding videos in h264 format.</b>
-Copyright (c) 2021 <a href='https://github.com/CantarellabotsTime/Video-Encoder-Bot'>CantarellabotsTime/Video-Encoder-Bot</a>
+Copyright (c) 2021 <a href='https://github.com/tawhid120/ENCODING-BOT'>tawhid120/ENCODING-BOT</a>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
 by the Free Software Foundation, either version 3 of the License, or
