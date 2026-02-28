@@ -7,7 +7,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
                     level=logging.INFO)
 
-UPSTREAM_REPO = 'https://github.com/abhinai2244/Encoding-Bot.git'
+UPSTREAM_REPO = 'https://github.com/tawhid120/ENCODING-BOT.git'
 
 UPSTREAM_BRANCH = 'master'
 

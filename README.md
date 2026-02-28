@@ -2,8 +2,8 @@
 
 A powerful Telegram bot for compressing, encoding, and manipulating video files. Built with Python (Pyrofork) and FFmpeg.
 
-**Developer:** [@cantarella_wuwa](https://t.me/cantarella_wuwa)  
-**Channel:** [Cantarella Bots](https://t.me/cantarellabots)
+**Developer:** [@juktijol](https://t.me/juktijol)  
+**Channel:** [Jukti Jol](https://t.me/juktijol)
 
 ## 🚀 Features
 

@@ -205,7 +205,7 @@ async def encode(filepath, message, msg, audio_map=None):
     # Metadata Watermark
     m = await db.get_metadata_w(message.from_user.id)
     if m:
-        metadata = '-metadata title=Cantarellabots -metadata:s:v title=Cantarellabots -metadata:s:a title=Cantarellabots'
+        metadata = '-metadata title=juktijol -metadata:s:v title=juktijol -metadata:s:a title=juktijol'
     else:
         metadata = ''
 
@@ -232,7 +232,7 @@ async def encode(filepath, message, msg, audio_map=None):
 
 #    ffmpeg_filter = ':'.join([
 #        'drawtext=fontfile=/app/bot/utils/watermark/font.ttf',
-#        f"text='Cantarellabots'",
+#        f"text='juktijol'",
 #        f'fontcolor=white',
 #        'fontsize=main_h/20',
 #        f'x=40:y=40'
