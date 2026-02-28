@@ -29,9 +29,9 @@ index = getenv("INDEX_URL")
 download_dir = getenv("DOWNLOAD_DIR")
 encode_dir = getenv("ENCODE_DIR")
 
-owner = list(set(int(x) for x in getenv("OWNER_ID").split()))
-sudo_users = list(set(int(x) for x in getenv("SUDO_USERS").split()))
-everyone = list(set(int(x) for x in getenv("EVERYONE_CHATS").split()))
+owner = list(set(int(x) for x in getenv("OWNER_ID", "").split())) if getenv("OWNER_ID", "").strip() else []
+sudo_users = list(set(int(x) for x in getenv("SUDO_USERS", "").split())) if getenv("SUDO_USERS", "").strip() else []
+everyone = list(set(int(x) for x in getenv("EVERYONE_CHATS", "").split())) if getenv("EVERYONE_CHATS", "").strip() else []
 all = everyone + sudo_users + owner
 
 try:

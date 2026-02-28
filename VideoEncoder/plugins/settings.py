@@ -3,7 +3,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from .. import all
 from ..utils.database.access_db import db
 from ..utils.database.add_user import AddUserToDatabase
 from ..utils.helper import check_chat, output
