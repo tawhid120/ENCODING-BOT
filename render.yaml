@@ -1,3 +1,6 @@
-IT WONT WORK RAM WILL BE FULL 
-
-IF PREMIUM USE DIRECT DOCKER
+services:
+  - type: web
+    name: encoding-bot
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
