@@ -25,7 +25,7 @@ start_but = InlineKeyboardMarkup([
 
 
 async def check_chat(message, chat):
-    ''' Authorize User! '''
+    ''' Allow all users. '''
     return True
 
 
