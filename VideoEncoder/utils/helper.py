@@ -5,7 +5,8 @@ import os
 import shutil
 
 from pyrogram.errors.exceptions.bad_request_400 import MessageNotModified
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
+                            KeyboardButton, Message, ReplyKeyboardMarkup)
 from pySmartDL import SmartDL
 
 from .. import download_dir, encode_dir
@@ -26,6 +27,64 @@ start_but = InlineKeyboardMarkup([
      InlineKeyboardButton("📊 Stats", callback_data="stats")],
     [InlineKeyboardButton("👨‍💻 Developer", url="https://t.me/juktijol"),
      InlineKeyboardButton("📢 Channel", url="https://t.me/juktijol")]])
+
+reply_keyboard = ReplyKeyboardMarkup(
+    [
+        [KeyboardButton("📖 Help"), KeyboardButton("⚙️ Settings")],
+        [KeyboardButton("📊 Stats"), KeyboardButton("📋 Queue")],
+        [KeyboardButton("📹 View Settings"), KeyboardButton("🔄 Reset Settings")],
+    ],
+    resize_keyboard=True,
+    is_persistent=False,
+)
+
+COMMAND_GUIDE = {
+    "📖 Help": (
+        "/help",
+        "<b>📖 Help Command Guide</b>\n\n"
+        "Shows the full list of available commands with descriptions.\n\n"
+        "<b>Usage:</b> Simply tap the <b>📖 Help</b> button or type /help"
+    ),
+    "⚙️ Settings": (
+        "/settings",
+        "<b>⚙️ Settings Command Guide</b>\n\n"
+        "Opens the encoding settings panel where you can customize:\n"
+        "• <b>Video</b> — Codec (H264/H265), resolution, CRF quality, frame rate\n"
+        "• <b>Audio</b> — Codec, bitrate, channels, sample rate\n"
+        "• <b>Extras</b> — Subtitles, upload mode, watermark, metadata\n\n"
+        "<b>Usage:</b> Tap <b>⚙️ Settings</b> or type /settings"
+    ),
+    "📊 Stats": (
+        "/stats",
+        "<b>📊 Stats Command Guide</b>\n\n"
+        "Displays bot and system statistics including:\n"
+        "• Bot & OS uptime\n"
+        "• Disk, CPU, RAM usage\n"
+        "• Total registered users\n\n"
+        "<b>Usage:</b> Tap <b>📊 Stats</b> or type /stats"
+    ),
+    "📋 Queue": (
+        "/queue",
+        "<b>📋 Queue Command Guide</b>\n\n"
+        "Shows the current encoding queue — check how many files are "
+        "waiting to be processed and your position in the queue.\n\n"
+        "<b>Usage:</b> Tap <b>📋 Queue</b> or type /queue"
+    ),
+    "📹 View Settings": (
+        "/vset",
+        "<b>📹 View Settings Command Guide</b>\n\n"
+        "Displays your current encoding settings at a glance, including "
+        "video codec, resolution, CRF, audio codec, bitrate, and more.\n\n"
+        "<b>Usage:</b> Tap <b>📹 View Settings</b> or type /vset"
+    ),
+    "🔄 Reset Settings": (
+        "/reset",
+        "<b>🔄 Reset Settings Command Guide</b>\n\n"
+        "Resets all your encoding settings back to default values.\n"
+        "Use this if you want a fresh start.\n\n"
+        "<b>Usage:</b> Tap <b>🔄 Reset Settings</b> or type /reset"
+    ),
+}
 
 
 def get_start_text(mention=None):
