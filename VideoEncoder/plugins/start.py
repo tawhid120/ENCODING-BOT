@@ -17,7 +17,7 @@ from .. import botStartTime, download_dir, encode_dir
 from ..utils.database.access_db import db
 from ..utils.database.add_user import AddUserToDatabase
 from ..utils.display_progress import TimeFormatter, humanbytes
-from ..utils.helper import check_chat, delete_downloads, get_start_text, start_but
+from ..utils.helper import check_chat, delete_downloads, get_start_text, start_but, reply_keyboard, COMMAND_GUIDE
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -35,6 +35,8 @@ async def start_message(app, message):
     await AddUserToDatabase(app, message)
     text = get_start_text(message.from_user.mention())
     await message.reply(text=text, reply_markup=start_but)
+    await message.reply("⌨️ <b>Quick Commands Keyboard Activated!</b>\n\nUse the buttons below to quickly access commands.",
+                        reply_markup=reply_keyboard)
 
 
 @Client.on_message(filters.command('help'))
@@ -192,3 +194,17 @@ async def update_message(app, message):
         await app.stop()
     finally:
         srun([f"bash run.sh"], shell=True)
+
+
+@Client.on_message(filters.regex(
+    r'^(📖 Help|⚙️ Settings|📊 Stats|📋 Queue|📹 View Settings|🔄 Reset Settings)$'
+))
+async def keyboard_button_handler(app, message):
+    c = await check_chat(message, chat='Both')
+    if not c:
+        return
+    await AddUserToDatabase(app, message)
+    btn_text = message.text.strip()
+    if btn_text in COMMAND_GUIDE:
+        command, guide = COMMAND_GUIDE[btn_text]
+        await message.reply(text=guide, disable_web_page_preview=True)
