@@ -30,7 +30,7 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
         # Compression Guide
         elif cb.data == "compress_guide":
             guide_btn = InlineKeyboardMarkup([
-                [InlineKeyboardButton("📹 240p", callback_data="compress_240p"),
+                [InlineKeyboardButton("📹 360p", callback_data="compress_360p"),
                  InlineKeyboardButton("📹 480p", callback_data="compress_480p")],
                 [InlineKeyboardButton("📹 720p", callback_data="compress_720p"),
                  InlineKeyboardButton("📹 1080p", callback_data="compress_1080p")],
@@ -376,7 +376,7 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
 
         # Compression Resolution Selection
         elif cb.data.startswith("compress_"):
-            resolution = cb.data.replace("compress_", "")  # e.g. "240p"
+            resolution = cb.data.replace("compress_", "")  # e.g. "360p"
 
             # Look up the original video message from pending_videos
             key = f"{cb.message.chat.id}:{cb.message.id}"

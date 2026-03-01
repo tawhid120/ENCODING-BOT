@@ -23,10 +23,10 @@ pending_videos = {}
 # Resolution presets: resolution -> (scale_height, video_bitrate, audio_bitrate, crf)
 # Optimized for heavy compression while maintaining acceptable visual quality.
 COMPRESS_PRESETS = {
-    '240p':  (240,  '300k',  '64k',  30),
-    '480p':  (480,  '800k',  '96k',  28),
-    '720p':  (720,  '1500k', '128k', 26),
-    '1080p': (1080, '2500k', '128k', 24),
+    '360p':  (360,  '500k',  '48k',  30),
+    '480p':  (480,  '800k',  '64k',  28),
+    '720p':  (720,  '1500k', '64k',  28),
+    '1080p': (1080, '2500k', '128k', 28),
 }
 
 
@@ -35,7 +35,7 @@ async def compress_video(filepath, resolution, message, msg):
     Heavy compression using FFmpeg with resolution-specific optimized settings.
 
     FFmpeg strategy optimized for low RAM (Render free tier, 512MB):
-    - libx264 codec with 'ultrafast' preset to minimize memory usage
+    - libx264 codec with 'veryfast' preset for better compression ratio
     - Single thread (-threads 1) to keep peak RAM low
     - CRF (Constant Rate Factor) tuned per resolution
     - maxrate cap prevents bitrate spikes
@@ -73,7 +73,7 @@ async def compress_video(filepath, resolution, message, msg):
         '-progress', progress, '-hwaccel', 'auto',
         '-y', '-i', filepath,
         '-c:v', 'libx264',
-        '-preset', 'ultrafast',
+        '-preset', 'veryfast',
         '-crf', str(crf),
         '-maxrate', v_bitrate,
         '-bufsize', bufsize,
