@@ -17,7 +17,7 @@ from .. import botStartTime, download_dir, encode_dir
 from ..utils.database.access_db import db
 from ..utils.database.add_user import AddUserToDatabase
 from ..utils.display_progress import TimeFormatter, humanbytes
-from ..utils.helper import check_chat, delete_downloads, start_but
+from ..utils.helper import check_chat, delete_downloads, get_start_text, start_but
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -33,16 +33,7 @@ async def start_message(app, message):
     if not c:
         return
     await AddUserToDatabase(app, message)
-    text = (
-        f"👋 <b>Welcome, {message.from_user.mention()}!</b>\n\n"
-        f"I'm a <b>Video Encoder Bot</b> — I can compress and encode your videos "
-        f"with custom quality, codec, and audio settings.\n\n"
-        f"<b>Quick Start:</b>\n"
-        f"1️⃣ Send me a video file or document\n"
-        f"2️⃣ The bot will automatically start encoding\n"
-        f"3️⃣ Get your compressed video back!\n\n"
-        f"Tap <b>📖 How to Use</b> below for a full guide."
-    )
+    text = get_start_text(message.from_user.mention())
     await message.reply(text=text, reply_markup=start_but)
 
 

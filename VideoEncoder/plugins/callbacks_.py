@@ -10,7 +10,7 @@ from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMa
 from .. import app, download_dir, log, LOGGER
 from ..plugins.queue import queue_answer
 from ..utils.database.access_db import db
-from ..utils.helper import start_but
+from ..utils.helper import get_start_text, start_but
 from ..utils.settings import (AudioSettings, ExtraSettings, OpenSettings,
                               VideoSettings)
 from .start import showw_status
@@ -82,16 +82,7 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
 
         # Back to Home / Start Menu
         elif cb.data == "go_home":
-            text = (
-                f"<b>🏠 Home</b>\n\n"
-                f"I'm a <b>Video Encoder Bot</b> — I can compress and encode your "
-                f"videos with custom quality, codec, and audio settings.\n\n"
-                f"<b>Quick Start:</b>\n"
-                f"1️⃣ Send me a video file or document\n"
-                f"2️⃣ The bot will automatically start encoding\n"
-                f"3️⃣ Get your compressed video back!\n\n"
-                f"Use the buttons below to explore."
-            )
+            text = get_start_text()
             await cb.message.edit(text=text, reply_markup=start_but, disable_web_page_preview=True)
 
         # Settings
