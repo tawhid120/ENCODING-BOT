@@ -20,6 +20,19 @@ A powerful Telegram bot for compressing, encoding, and manipulating video files.
   - Custom bitrate and sample rates.
   - Mix/Remix audio channels (Stereo, Mono, 5.1).
 
+### 🗜 Quick Video Compression (NEW)
+- **Send or forward any video** to the bot and instantly get an **inline keyboard** with resolution options:
+  - **240p** — Maximum compression, smallest file size
+  - **480p** — Good balance of quality and size
+  - **720p** — HD quality with significant size reduction
+  - **1080p** — Full HD with optimized compression
+- Uses **FFmpeg** with optimized settings (libx264, slow preset, CRF + maxrate cap) for **heavy compression** while maintaining acceptable visual quality.
+- Example: A 1GB video can be compressed down to 100–200MB depending on the selected resolution.
+
+### 📡 Large File Support
+- **Pyrofork** (MTProto) natively supports uploading and downloading files **up to 2GB**.
+- Optional **Local Telegram Bot API Server** configuration for routing through a self-hosted API server.
+
 ### 🎛 Audio Rearrangement (`/af`)
 - Interactively **reorder audio streams** in a video file using an inline button menu.
 - Set the default audio track by moving it to the top.
@@ -66,6 +79,7 @@ The bot is configured via environment variables (or `config.env`).
 - `SUDO_USERS`: List of admin user IDs.
 - `LOG_CHANNEL`: Channel ID for logging tasks.
 - `DOWNLOAD_DIR`, `ENCODE_DIR`: Paths for working directories.
+- `LOCAL_API_URL`: (Optional) URL of a Local Telegram Bot API Server for large file support via Bot API. Pyrogram uses MTProto by default which supports files up to 2GB without this.
 
 ## 🏃 How to Run
 

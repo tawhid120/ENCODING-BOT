@@ -15,6 +15,7 @@ from pyrogram.types import Message
 from requests.utils import unquote
 
 from .. import LOGGER, data, download_dir, video_mimetype
+from .compression import compress_tasks, compress_video
 from .database.access_db import db
 from .direct_link_generator import direct_link_generator
 from .display_progress import progress_for_pyrogram
@@ -53,7 +54,12 @@ async def on_task_complete():
                  if message.document and not message.document.mime_type in video_mimetype:
                     await on_task_complete()
                     return
-                 await handle_tasks(message, 'tg')
+                 # Check if this is a compression task
+                 msg_key = f"{message.chat.id}:{message.id}"
+                 if msg_key in compress_tasks:
+                     await handle_tasks(message, 'compress')
+                 else:
+                     await handle_tasks(message, 'tg')
             else:
                  # Just text, maybe a link but without command? Or unhandled
                  pass
@@ -63,7 +69,12 @@ async def on_task_complete():
             if not message.document.mime_type in video_mimetype:
                 await on_task_complete()
                 return
-        await handle_tasks(message, 'tg')
+        # Check if this is a compression task
+        msg_key = f"{message.chat.id}:{message.id}"
+        if msg_key in compress_tasks:
+            await handle_tasks(message, 'compress')
+        else:
+            await handle_tasks(message, 'tg')
 
 
 async def handle_tasks(message, mode):
@@ -75,6 +86,8 @@ async def handle_tasks(message, mode):
             await url_task(message, msg)
         elif mode == 'af':
             await af_task(message, msg)
+        elif mode == 'compress':
+            await compress_task(message, msg)
         else:
             await batch_task(message, msg)
     except MessageNotModified:
@@ -102,6 +115,54 @@ async def tg_task(message, msg):
         return
     await msg.edit('Encoding...')
     await handle_encode(filepath, message, msg)
+
+
+async def compress_task(message, msg):
+    """Download the video and compress it at the selected resolution."""
+    msg_key = f"{message.chat.id}:{message.id}"
+    resolution = compress_tasks.pop(msg_key, '480p')
+
+    filepath = await handle_tg_down(message, msg)
+    if not filepath:
+        await msg.edit("Download failed or no file found.")
+        return
+
+    await msg.edit(f'<b>🗜 Compressing to {resolution}...</b>')
+    new_file = await compress_video(filepath, resolution, message, msg)
+
+    if new_file:
+        await msg.edit("<code>Compression done, uploading...</code>")
+        try:
+            from .uploads import upload_worker
+            link = await upload_worker(new_file, message, msg)
+
+            # Show compression stats
+            orig_size = os.path.getsize(filepath) if os.path.isfile(filepath) else 0
+            new_size = os.path.getsize(new_file) if os.path.isfile(new_file) else 0
+            if orig_size > 0:
+                ratio = round((1 - new_size / orig_size) * 100, 1)
+            else:
+                ratio = 0
+            await msg.edit(
+                f'<b>✅ Compression Complete!</b>\n\n'
+                f'📦 Original: {round(orig_size / (1024 * 1024), 2)} MB\n'
+                f'📦 Compressed: {round(new_size / (1024 * 1024), 2)} MB\n'
+                f'🔻 Reduced by: {ratio}%'
+            )
+        except Exception as e:
+            await msg.edit(f"Upload error: {e}")
+
+        try:
+            os.remove(new_file)
+            os.remove(filepath)
+        except Exception:
+            pass
+    else:
+        await message.reply("<code>FFmpeg compression failed. Please try a different resolution.</code>")
+        try:
+            os.remove(filepath)
+        except Exception:
+            pass
 
 
 async def af_task(message, msg):
