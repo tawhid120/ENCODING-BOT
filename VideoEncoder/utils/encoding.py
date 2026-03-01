@@ -359,7 +359,7 @@ async def encode(filepath, message, msg, audio_map=None):
     else:
         channels = ''
 
-    finish = '-threads 8'
+    finish = '-threads 1'
 
     # Finally
     command = ['ffmpeg', '-hide_banner', '-loglevel', 'error',

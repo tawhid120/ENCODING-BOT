@@ -34,8 +34,9 @@ async def compress_video(filepath, resolution, message, msg):
     """
     Heavy compression using FFmpeg with resolution-specific optimized settings.
 
-    FFmpeg strategy for maximum compression:
-    - libx264 codec with 'slow' preset for best compression efficiency
+    FFmpeg strategy optimized for low RAM (Render free tier, 512MB):
+    - libx264 codec with 'ultrafast' preset to minimize memory usage
+    - Single thread (-threads 1) to keep peak RAM low
     - CRF (Constant Rate Factor) tuned per resolution
     - maxrate cap prevents bitrate spikes
     - bufsize = 2x maxrate for VBV buffering
@@ -72,7 +73,7 @@ async def compress_video(filepath, resolution, message, msg):
         '-progress', progress, '-hwaccel', 'auto',
         '-y', '-i', filepath,
         '-c:v', 'libx264',
-        '-preset', 'slow',
+        '-preset', 'ultrafast',
         '-crf', str(crf),
         '-maxrate', v_bitrate,
         '-bufsize', bufsize,
@@ -84,7 +85,7 @@ async def compress_video(filepath, resolution, message, msg):
         '-map', '0:v:0',
         '-map', '0:a?',
         '-movflags', '+faststart',
-        '-threads', '8',
+        '-threads', '1',
         output_filepath
     ]
 
