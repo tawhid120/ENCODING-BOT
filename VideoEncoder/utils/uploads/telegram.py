@@ -8,8 +8,9 @@ from ..database.access_db import db
 from ..display_progress import progress_for_pyrogram
 from ..encoding import get_duration, get_thumbnail, get_width_height
 
-# Bot Token via MTProto has a 50MB upload limit
-MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB in bytes
+# Pyrofork uses MTProto protocol which natively supports files up to 2GB
+# with a standard Bot Token — no Local API Server or Userbot needed.
+MAX_UPLOAD_SIZE = 2 * 1024 * 1024 * 1024  # 2 GB in bytes
 
 
 async def upload_to_tg(new_file, message, msg):
@@ -18,15 +19,18 @@ async def upload_to_tg(new_file, message, msg):
     filename = os.path.basename(new_file)
     duration = get_duration(new_file)
 
-    # Check file size against Bot Token MTProto limit (50MB)
+    # Check file size against Pyrofork MTProto limit (2GB)
     file_size = os.path.getsize(new_file)
     if file_size > MAX_UPLOAD_SIZE:
-        size_mb = round(file_size / (1024 * 1024), 2)
-        LOGGER.warning(f"File {filename} is {size_mb} MB, exceeds 50MB Bot Token limit.")
+        if file_size >= 1024 * 1024 * 1024:
+            size_display = f"{round(file_size / (1024 * 1024 * 1024), 2)} GB"
+        else:
+            size_display = f"{round(file_size / (1024 * 1024), 2)} MB"
+        LOGGER.warning(f"File {filename} is {size_display}, exceeds 2GB MTProto limit.")
         await msg.edit(
             f"<b>⚠️ File too large for upload!</b>\n\n"
-            f"📦 <b>Size:</b> {size_mb} MB\n"
-            f"📏 <b>Limit:</b> 50 MB (Bot Token via MTProto)\n\n"
+            f"📦 <b>Size:</b> {size_display}\n"
+            f"📏 <b>Limit:</b> 2 GB (Pyrofork MTProto)\n\n"
             f"The compressed file still exceeds the limit. "
             f"Please try encoding with a lower resolution or bitrate."
         )
