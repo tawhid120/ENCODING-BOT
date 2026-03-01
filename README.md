@@ -22,11 +22,11 @@ A powerful Telegram bot for compressing, encoding, and manipulating video files.
 
 ### 🗜 Quick Video Compression (NEW)
 - **Send or forward any video** to the bot and instantly get an **inline keyboard** with resolution options:
-  - **240p** — Maximum compression, smallest file size
+  - **360p** — Maximum compression, small file size
   - **480p** — Good balance of quality and size
   - **720p** — HD quality with significant size reduction
   - **1080p** — Full HD with optimized compression
-- Uses **FFmpeg** with optimized settings (libx264, slow preset, CRF + maxrate cap) for **heavy compression** while maintaining acceptable visual quality.
+- Uses **FFmpeg** with optimized settings (libx264, veryfast preset, CRF 28–30 + maxrate cap) for **heavy compression** while maintaining acceptable visual quality.
 - Example: A 1GB video can be compressed down to 100–200MB depending on the selected resolution.
 
 ### 📡 Large File Support

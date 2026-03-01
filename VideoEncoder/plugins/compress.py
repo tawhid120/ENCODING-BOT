@@ -43,7 +43,7 @@ async def on_video_received(app, message):
 
     keyboard = InlineKeyboardMarkup([
         [
-            InlineKeyboardButton("📹 240p", callback_data="compress_240p"),
+            InlineKeyboardButton("📹 360p", callback_data="compress_360p"),
             InlineKeyboardButton("📹 480p", callback_data="compress_480p"),
         ],
         [
