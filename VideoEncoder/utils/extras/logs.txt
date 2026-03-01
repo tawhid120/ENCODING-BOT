@@ -332,3 +332,32 @@ pymongo.errors.ServerSelectionTimeoutError: m:27017: [Errno 11001] getaddrinfo f
 20-Feb-26 14:49:58 - VideoEncoder - INFO - end
 20-Feb-26 14:49:58 - VideoEncoder - ERROR - FFmpeg stderr: 
 20-Feb-26 14:51:56 - root - INFO - Stop signal received (SIGINT). Exiting...
+01-Mar-26 13:46:31 - requests_cache.backends - DEBUG - Initializing backend: sqlite /home/runner/.lk21-requests-cache
+01-Mar-26 13:46:31 - requests_cache.backends.base - DEBUG - Initialized SQLiteDict with serializer: SerializerPipeline(name=pickle, n_stages=2)
+01-Mar-26 13:46:31 - requests_cache.backends.sqlite - DEBUG - Opening connection to /home/runner/.lk21-requests-cache.sqlite:responses
+01-Mar-26 13:46:31 - requests_cache.backends.base - DEBUG - Initialized SQLiteDict with serializer: None
+01-Mar-26 13:46:31 - requests_cache.backends.sqlite - DEBUG - Opening connection to /home/runner/.lk21-requests-cache.sqlite:redirects
+01-Mar-26 13:46:31 - requests_cache.patcher - DEBUG - Patching requests.Session with class: _ConfiguredCachedSession
+01-Mar-26 13:46:31 - requests_cache.backends - DEBUG - Initializing backend: <SQLiteCache(name=/home/runner/.lk21-requests-cache)> http_cache
+01-Mar-26 13:47:03 - requests_cache.backends - DEBUG - Initializing backend: sqlite /home/runner/.lk21-requests-cache
+01-Mar-26 13:47:03 - requests_cache.backends.base - DEBUG - Initialized SQLiteDict with serializer: SerializerPipeline(name=pickle, n_stages=2)
+01-Mar-26 13:47:03 - requests_cache.backends.sqlite - DEBUG - Opening connection to /home/runner/.lk21-requests-cache.sqlite:responses
+01-Mar-26 13:47:03 - requests_cache.backends.base - DEBUG - Initialized SQLiteDict with serializer: None
+01-Mar-26 13:47:03 - requests_cache.backends.sqlite - DEBUG - Opening connection to /home/runner/.lk21-requests-cache.sqlite:redirects
+01-Mar-26 13:47:03 - requests_cache.patcher - DEBUG - Patching requests.Session with class: _ConfiguredCachedSession
+01-Mar-26 13:47:03 - requests_cache.backends - DEBUG - Initializing backend: <SQLiteCache(name=/home/runner/.lk21-requests-cache)> http_cache
+01-Mar-26 13:47:03 - pymongo.topology - DEBUG - {"message": "Starting topology monitoring", "topologyId": {"$oid": "69a4435767cb33afce9a09f9"}}
+01-Mar-26 13:47:03 - pymongo.topology - DEBUG - {"message": "Topology description changed", "topologyId": {"$oid": "69a4435767cb33afce9a09f9"}, "previousDescription": "<TopologyDescription id: 69a4435767cb33afce9a09f9, topology_type: Unknown, servers: []>", "newDescription": "<TopologyDescription id: 69a4435767cb33afce9a09f9, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None>]>"}
+01-Mar-26 13:47:03 - pymongo.topology - DEBUG - {"message": "Starting server monitoring", "topologyId": {"$oid": "69a4435767cb33afce9a09f9"}, "serverHost": "localhost", "serverPort": 27017}
+01-Mar-26 13:47:04 - VideoEncoder - INFO - Imported Utils!
+01-Mar-26 13:47:13 - requests_cache.backends - DEBUG - Initializing backend: sqlite /home/runner/.lk21-requests-cache
+01-Mar-26 13:47:13 - requests_cache.backends.base - DEBUG - Initialized SQLiteDict with serializer: SerializerPipeline(name=pickle, n_stages=2)
+01-Mar-26 13:47:13 - requests_cache.backends.sqlite - DEBUG - Opening connection to /home/runner/.lk21-requests-cache.sqlite:responses
+01-Mar-26 13:47:13 - requests_cache.backends.base - DEBUG - Initialized SQLiteDict with serializer: None
+01-Mar-26 13:47:13 - requests_cache.backends.sqlite - DEBUG - Opening connection to /home/runner/.lk21-requests-cache.sqlite:redirects
+01-Mar-26 13:47:13 - requests_cache.patcher - DEBUG - Patching requests.Session with class: _ConfiguredCachedSession
+01-Mar-26 13:47:13 - requests_cache.backends - DEBUG - Initializing backend: <SQLiteCache(name=/home/runner/.lk21-requests-cache)> http_cache
+01-Mar-26 13:47:13 - pymongo.topology - DEBUG - {"message": "Starting topology monitoring", "topologyId": {"$oid": "69a4436127ddb069d118748b"}}
+01-Mar-26 13:47:13 - pymongo.topology - DEBUG - {"message": "Topology description changed", "topologyId": {"$oid": "69a4436127ddb069d118748b"}, "previousDescription": "<TopologyDescription id: 69a4436127ddb069d118748b, topology_type: Unknown, servers: []>", "newDescription": "<TopologyDescription id: 69a4436127ddb069d118748b, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None>]>"}
+01-Mar-26 13:47:13 - pymongo.topology - DEBUG - {"message": "Starting server monitoring", "topologyId": {"$oid": "69a4436127ddb069d118748b"}, "serverHost": "localhost", "serverPort": 27017}
+01-Mar-26 13:47:13 - VideoEncoder - INFO - Imported Utils!

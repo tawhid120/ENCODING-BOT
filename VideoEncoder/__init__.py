@@ -29,6 +29,12 @@ index = getenv("INDEX_URL")
 download_dir = getenv("DOWNLOAD_DIR")
 encode_dir = getenv("ENCODE_DIR")
 
+# Local Telegram Bot API Server (optional, for files > 50MB via Bot API)
+# Pyrogram uses MTProto which natively supports files up to 2GB.
+# Set this only if you run a Local Telegram Bot API Server and want to route through it.
+# Example: "http://localhost:8081"
+local_api_url = getenv("LOCAL_API_URL", "")
+
 owner = list(set(int(x) for x in getenv("OWNER_ID", "").split())) if getenv("OWNER_ID", "").strip() else []
 sudo_users = list(set(int(x) for x in getenv("SUDO_USERS", "").split())) if getenv("SUDO_USERS", "").strip() else []
 everyone = list(set(int(x) for x in getenv("EVERYONE_CHATS", "").split())) if getenv("EVERYONE_CHATS", "").strip() else []
@@ -105,6 +111,9 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 LOGGER = logging.getLogger(__name__)
 
 # Client
+# Pyrofork uses MTProto protocol which natively supports files up to 2GB.
+# No Local Bot API Server is needed for large file support.
+# The LOCAL_API_URL config is reserved for custom deployments.
 app = Client(
     session,
     bot_token=bot_token,

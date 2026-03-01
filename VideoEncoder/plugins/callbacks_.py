@@ -7,12 +7,14 @@ import os
 from pyrogram import Client
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 
-from .. import app, download_dir, log, LOGGER
+from .. import app, data, download_dir, log, LOGGER, video_mimetype
 from ..plugins.queue import queue_answer
+from ..utils.compression import compress_tasks, pending_videos
 from ..utils.database.access_db import db
 from ..utils.helper import get_start_text, start_but
 from ..utils.settings import (AudioSettings, ExtraSettings, OpenSettings,
                               VideoSettings)
+from ..utils.tasks import handle_tasks
 from .start import showw_status
 from ..video_utils.audio_selector import sessions
 
@@ -358,6 +360,39 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
             else:
                 await db.set_crf(cb.from_user.id, crf=nextcrf)
             await VideoSettings(cb.message, user_id=cb.from_user.id)
+
+        # Compression Resolution Selection
+        elif cb.data.startswith("compress_"):
+            resolution = cb.data.replace("compress_", "")  # e.g. "240p"
+
+            # Look up the original video message from pending_videos
+            key = f"{cb.message.chat.id}:{cb.message.id}"
+            original_msg = pending_videos.pop(key, None)
+
+            if not original_msg:
+                await cb.answer("Session expired. Please send the video again.",
+                                show_alert=True)
+                return
+
+            if not (original_msg.video or
+                    (original_msg.document and
+                     original_msg.document.mime_type in video_mimetype)):
+                await cb.answer("No video found!", show_alert=True)
+                return
+
+            # Store compression resolution for this message
+            msg_key = f"{original_msg.chat.id}:{original_msg.id}"
+            compress_tasks[msg_key] = resolution
+
+            await cb.message.edit(
+                f"<b>📥 Queued for compression at {resolution}...</b>")
+
+            # Add to the encoding queue
+            data.append(original_msg)
+            if len(data) == 1:
+                await handle_tasks(original_msg, 'compress')
+            else:
+                await cb.message.edit("📔 Waiting for queue...")
 
         # Audio Selector Callbacks
         elif "audiosel" in cb.data:
