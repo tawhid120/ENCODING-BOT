@@ -56,7 +56,7 @@ async def compress_video(filepath, resolution, message, msg):
 
     progress = os.path.join(download_dir, "process.txt")
     with open(progress, 'w') as f:
-        pass
+        pass  # Truncate the progress file for fresh FFmpeg output
 
     assert output_filepath != filepath
 
@@ -142,13 +142,14 @@ async def _handle_compress_progress(proc, msg, message, filepath):
                     continue
 
                 elapsed_time = int(time_in_us[-1]) / 1000000
-                speed_val = float(speed[-1]) if speed else 1
+                speed_val = float(speed[-1]) if speed else 1.0
                 total_time, _ = await media_info(filepath)
 
                 if not total_time or total_time == 0:
                     continue
 
                 percentage = min(math.floor(elapsed_time * 100 / total_time), 100)
+                # Clamp speed to avoid division by zero
                 difference = math.floor(
                     (total_time - elapsed_time) / max(speed_val, 0.01))
                 ETA = TimeFormatter(difference) if difference > 0 else "-"

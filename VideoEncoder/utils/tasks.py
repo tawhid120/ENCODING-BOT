@@ -139,7 +139,10 @@ async def compress_task(message, msg):
             # Show compression stats
             orig_size = os.path.getsize(filepath) if os.path.isfile(filepath) else 0
             new_size = os.path.getsize(new_file) if os.path.isfile(new_file) else 0
-            ratio = round((1 - new_size / orig_size) * 100, 1) if orig_size > 0 else 0
+            if orig_size > 0:
+                ratio = round((1 - new_size / orig_size) * 100, 1)
+            else:
+                ratio = 0
             await msg.edit(
                 f'<b>✅ Compression Complete!</b>\n\n'
                 f'📦 Original: {round(orig_size / (1024 * 1024), 2)} MB\n'
@@ -155,7 +158,7 @@ async def compress_task(message, msg):
         except Exception:
             pass
     else:
-        await message.reply("<code>Something went wrong during compression.</code>")
+        await message.reply("<code>FFmpeg compression failed. Please try a different resolution.</code>")
         try:
             os.remove(filepath)
         except Exception:
