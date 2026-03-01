@@ -197,7 +197,7 @@ async def update_message(app, message):
 
 
 @Client.on_message(filters.regex(
-    r'^(📖 Help|⚙️ Settings|📊 Stats|📋 Queue|📹 View Settings|🔄 Reset Settings)$'
+    r'^(🗜 Compress Guide|📖 Help|⚙️ Settings|📊 Stats|📋 Queue|📹 View Settings|🔄 Reset Settings)$'
 ))
 async def keyboard_button_handler(app, message):
     c = await check_chat(message, chat='Both')

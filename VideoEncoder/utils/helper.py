@@ -21,6 +21,7 @@ output = InlineKeyboardMarkup([
 ])
 
 start_but = InlineKeyboardMarkup([
+    [InlineKeyboardButton("🗜 Compress Guide", callback_data="compress_guide")],
     [InlineKeyboardButton("📖 How to Use", callback_data="how_to_use"),
      InlineKeyboardButton("📋 Commands", callback_data="commands_list")],
     [InlineKeyboardButton("⚙️ Settings", callback_data="OpenSettings"),
@@ -30,6 +31,7 @@ start_but = InlineKeyboardMarkup([
 
 reply_keyboard = ReplyKeyboardMarkup(
     [
+        [KeyboardButton("🗜 Compress Guide")],
         [KeyboardButton("📖 Help"), KeyboardButton("⚙️ Settings")],
         [KeyboardButton("📊 Stats"), KeyboardButton("📋 Queue")],
         [KeyboardButton("📹 View Settings"), KeyboardButton("🔄 Reset Settings")],
@@ -39,6 +41,35 @@ reply_keyboard = ReplyKeyboardMarkup(
 )
 
 COMMAND_GUIDE = {
+    "🗜 Compress Guide": (
+        "compress",
+        "<b>🗜 Video Compression Guide</b>\n\n"
+        "<b>📌 What is Compression?</b>\n"
+        "Compression reduces your video file size while keeping "
+        "acceptable visual quality — perfect for saving storage or "
+        "sharing on slow networks.\n\n"
+        "<b>📹 How to Compress a Video:</b>\n"
+        "1️⃣ Send a video file to this bot\n"
+        "2️⃣ Choose a resolution: <b>240p, 480p, 720p, or 1080p</b>\n"
+        "3️⃣ Wait for the bot to compress and send it back!\n\n"
+        "<b>🎯 Resolution Presets:</b>\n"
+        "┌─────────────────────────────┐\n"
+        "│ <b>📹 240p</b>  — Max compression     │\n"
+        "│ <b>📹 480p</b>  — Balanced quality     │\n"
+        "│ <b>📹 720p</b>  — HD quality           │\n"
+        "│ <b>📹 1080p</b> — Full HD quality      │\n"
+        "└─────────────────────────────┘\n\n"
+        "<b>⚙️ Technical Details:</b>\n"
+        "• Codec: <b>H.264 (libx264)</b>\n"
+        "• Preset: <b>Ultrafast</b> (fast processing)\n"
+        "• Audio: <b>AAC Stereo</b>\n"
+        "• Format: <b>MP4</b> with fast-start enabled\n\n"
+        "<b>💡 Tips:</b>\n"
+        "• Lower resolution = smaller file size\n"
+        "• 480p is ideal for most mobile viewing\n"
+        "• 720p gives a great balance of size & quality\n"
+        "• Use /settings for advanced encoding options"
+    ),
     "📖 Help": (
         "/help",
         "<b>📖 Help Command Guide</b>\n\n"
