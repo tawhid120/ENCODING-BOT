@@ -3,10 +3,13 @@
 import os
 import time
 
-from ... import app, download_dir, log
+from ... import app, download_dir, log, LOGGER
 from ..database.access_db import db
 from ..display_progress import progress_for_pyrogram
 from ..encoding import get_duration, get_thumbnail, get_width_height
+
+# Bot Token via MTProto has a 50MB upload limit
+MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB in bytes
 
 
 async def upload_to_tg(new_file, message, msg):
@@ -14,6 +17,19 @@ async def upload_to_tg(new_file, message, msg):
     c_time = time.time()
     filename = os.path.basename(new_file)
     duration = get_duration(new_file)
+
+    # Check file size against Bot Token MTProto limit (50MB)
+    file_size = os.path.getsize(new_file) if os.path.isfile(new_file) else 0
+    if file_size > MAX_UPLOAD_SIZE:
+        size_mb = round(file_size / (1024 * 1024), 2)
+        LOGGER.warning(f"File {filename} is {size_mb} MB, exceeds 50MB Bot Token limit.")
+        await msg.edit(
+            f"<b>⚠️ File too large for upload!</b>\n\n"
+            f"📦 <b>Size:</b> {size_mb} MB\n"
+            f"📏 <b>Limit:</b> 50 MB (Bot Token via MTProto)\n\n"
+            f"Please try a lower resolution or the file is too long to compress under 50MB."
+        )
+        return None
 
     # Thumbnail Logic
     custom_thumb = await db.get_thumbnail(message.from_user.id)
