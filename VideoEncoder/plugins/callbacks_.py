@@ -5,11 +5,12 @@ import json
 import os
 
 from pyrogram import Client
-from pyrogram.types import CallbackQuery
+from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 
 from .. import app, download_dir, log, LOGGER
 from ..plugins.queue import queue_answer
 from ..utils.database.access_db import db
+from ..utils.helper import start_but
 from ..utils.settings import (AudioSettings, ExtraSettings, OpenSettings,
                               VideoSettings)
 from .start import showw_status
@@ -23,6 +24,75 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
 
         if cb.data == "closeMeh":
             await cb.message.delete(True)
+
+        # How to Use Guide
+        elif cb.data == "how_to_use":
+            text = (
+                "<b>📖 How to Use This Bot</b>\n\n"
+                "<b>Step 1: Send a Video</b>\n"
+                "Send any video file or document directly to this bot. "
+                "The bot will automatically detect it and start encoding.\n\n"
+                "<b>Step 2: Adjust Settings (Optional)</b>\n"
+                "Before sending a video, you can customize:\n"
+                "• <b>Video</b> — Codec (H264/H265), resolution, CRF quality\n"
+                "• <b>Audio</b> — Codec, bitrate, channels, sample rate\n"
+                "• <b>Extras</b> — Subtitles, upload mode, watermark\n"
+                "Tap ⚙️ <b>Settings</b> to configure these.\n\n"
+                "<b>Step 3: Get Your Encoded Video</b>\n"
+                "Once encoding is done, the bot will send the compressed "
+                "video back to you.\n\n"
+                "<b>Other Features:</b>\n"
+                "• /ddl [url] | [name] — Encode from a direct link\n"
+                "• /batch [url] — Encode multiple files\n"
+                "• /af — Rearrange audio tracks (reply to a video)\n"
+                "• /queue — Check your position in the queue"
+            )
+            back_btn = InlineKeyboardMarkup([
+                [InlineKeyboardButton("⚙️ Settings", callback_data="OpenSettings"),
+                 InlineKeyboardButton("📋 Commands", callback_data="commands_list")],
+                [InlineKeyboardButton("🔙 Back to Home", callback_data="go_home")]
+            ])
+            await cb.message.edit(text=text, reply_markup=back_btn, disable_web_page_preview=True)
+
+        # Commands List
+        elif cb.data == "commands_list":
+            text = (
+                "<b>📋 Available Commands</b>\n\n"
+                "<b>📹 Encoding:</b>\n"
+                "• Send a video → Auto encode\n"
+                "• /dl — Encode a Telegram video (reply to file)\n"
+                "• /ddl [url] | [name] — Encode from direct link\n"
+                "• /batch [url] — Batch encode from link\n"
+                "• /af — Rearrange audio tracks (reply to file)\n\n"
+                "<b>⚙️ Settings:</b>\n"
+                "• /settings — Open encoding settings\n"
+                "• /vset — View current settings\n"
+                "• /reset — Reset to default settings\n\n"
+                "<b>📊 Info:</b>\n"
+                "• /queue — Check encoding queue\n"
+                "• /stats — View bot & system stats\n"
+                "• /help — Show all commands"
+            )
+            back_btn = InlineKeyboardMarkup([
+                [InlineKeyboardButton("📖 How to Use", callback_data="how_to_use"),
+                 InlineKeyboardButton("⚙️ Settings", callback_data="OpenSettings")],
+                [InlineKeyboardButton("🔙 Back to Home", callback_data="go_home")]
+            ])
+            await cb.message.edit(text=text, reply_markup=back_btn, disable_web_page_preview=True)
+
+        # Back to Home / Start Menu
+        elif cb.data == "go_home":
+            text = (
+                f"<b>🏠 Home</b>\n\n"
+                f"I'm a <b>Video Encoder Bot</b> — I can compress and encode your "
+                f"videos with custom quality, codec, and audio settings.\n\n"
+                f"<b>Quick Start:</b>\n"
+                f"1️⃣ Send me a video file or document\n"
+                f"2️⃣ The bot will automatically start encoding\n"
+                f"3️⃣ Get your compressed video back!\n\n"
+                f"Use the buttons below to explore."
+            )
+            await cb.message.edit(text=text, reply_markup=start_but, disable_web_page_preview=True)
 
         # Settings
 

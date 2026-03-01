@@ -20,8 +20,12 @@ output = InlineKeyboardMarkup([
 ])
 
 start_but = InlineKeyboardMarkup([
-    [InlineKeyboardButton("sᴛᴀᴛs", callback_data="stats"), InlineKeyboardButton("Settings", callback_data="OpenSettings")],
-    [InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", url="https://t.me/juktijol"), InlineKeyboardButton("JuktiJol", url="https://t.me/juktijol")]])
+    [InlineKeyboardButton("📖 How to Use", callback_data="how_to_use"),
+     InlineKeyboardButton("📋 Commands", callback_data="commands_list")],
+    [InlineKeyboardButton("⚙️ Settings", callback_data="OpenSettings"),
+     InlineKeyboardButton("📊 Stats", callback_data="stats")],
+    [InlineKeyboardButton("👨‍💻 Developer", url="https://t.me/juktijol"),
+     InlineKeyboardButton("📢 Channel", url="https://t.me/juktijol")]])
 
 
 async def check_chat(message, chat):
