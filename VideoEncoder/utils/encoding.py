@@ -249,6 +249,8 @@ async def encode(filepath, message, msg, audio_map=None):
         watermark = '-vf scale=1280:720'
     elif r == '576':
         watermark = '-vf scale=768:576'
+    elif r == '240':
+        watermark = '-vf scale=426:240'
     else:
         watermark = '-vf scale=852:480'
     if w:

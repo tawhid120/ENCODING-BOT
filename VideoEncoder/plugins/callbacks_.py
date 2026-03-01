@@ -279,6 +279,8 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
             elif r == '720':
                 await db.set_resolution(cb.from_user.id, resolution='480')
             elif r == '480':
+                await db.set_resolution(cb.from_user.id, resolution='240')
+            elif r == '240':
                 await db.set_resolution(cb.from_user.id, resolution='576')
             else:
                 await db.set_resolution(cb.from_user.id, resolution='OG')
