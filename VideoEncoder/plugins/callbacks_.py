@@ -11,7 +11,7 @@ from .. import app, data, download_dir, log, LOGGER, video_mimetype
 from ..plugins.queue import queue_answer
 from ..utils.compression import compress_tasks, pending_videos
 from ..utils.database.access_db import db
-from ..utils.helper import get_start_text, start_but
+from ..utils.helper import get_start_text, start_but, COMPRESS_GUIDE_TEXT
 from ..utils.settings import (AudioSettings, ExtraSettings, OpenSettings,
                               VideoSettings)
 from ..utils.tasks import handle_tasks
@@ -29,34 +29,6 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
 
         # Compression Guide
         elif cb.data == "compress_guide":
-            text = (
-                "<b>🗜 Video Compression Guide</b>\n\n"
-                "<b>📌 What is Compression?</b>\n"
-                "Compression reduces your video file size while keeping "
-                "acceptable visual quality — perfect for saving storage "
-                "or sharing on slow networks.\n\n"
-                "<b>📹 How to Compress a Video:</b>\n"
-                "1️⃣ Send a video file to this bot\n"
-                "2️⃣ Choose a resolution: <b>240p, 480p, 720p, or 1080p</b>\n"
-                "3️⃣ Wait for the bot to compress and send it back!\n\n"
-                "<b>🎯 Resolution Presets:</b>\n"
-                "┌──────────────────────────────────────┐\n"
-                "│ <b>📹 240p</b>  — Max compression, tiny size     │\n"
-                "│ <b>📹 480p</b>  — Balanced quality & size        │\n"
-                "│ <b>📹 720p</b>  — HD quality, moderate size      │\n"
-                "│ <b>📹 1080p</b> — Full HD, larger size           │\n"
-                "└──────────────────────────────────────┘\n\n"
-                "<b>⚙️ Technical Details:</b>\n"
-                "• Codec: <b>H.264 (libx264)</b>\n"
-                "• Preset: <b>Ultrafast</b> (fast processing)\n"
-                "• Audio: <b>AAC Stereo</b>\n"
-                "• Format: <b>MP4</b> with fast-start enabled\n\n"
-                "<b>💡 Tips:</b>\n"
-                "• Lower resolution = smaller file size\n"
-                "• 480p is ideal for most mobile viewing\n"
-                "• 720p gives a great balance of size & quality\n"
-                "• Use /settings for advanced encoding options"
-            )
             guide_btn = InlineKeyboardMarkup([
                 [InlineKeyboardButton("📹 240p", callback_data="compress_240p"),
                  InlineKeyboardButton("📹 480p", callback_data="compress_480p")],
@@ -66,7 +38,7 @@ async def callback_handlers(bot: Client, cb: CallbackQuery):
                  InlineKeyboardButton("📋 Commands", callback_data="commands_list")],
                 [InlineKeyboardButton("🔙 Back to Home", callback_data="go_home")]
             ])
-            await cb.message.edit(text=text, reply_markup=guide_btn, disable_web_page_preview=True)
+            await cb.message.edit(text=COMPRESS_GUIDE_TEXT, reply_markup=guide_btn, disable_web_page_preview=True)
 
         # How to Use Guide
         elif cb.data == "how_to_use":
