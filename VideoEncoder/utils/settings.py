@@ -97,6 +97,8 @@ async def VideoSettings(event: Message, user_id: int):
             res = '576p'
         elif r == '480':
             res = '480p'
+        elif r == '240':
+            res = '240p'
         else:
             res = 'Source'
 
