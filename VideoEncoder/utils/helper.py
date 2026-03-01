@@ -20,8 +20,26 @@ output = InlineKeyboardMarkup([
 ])
 
 start_but = InlineKeyboardMarkup([
-    [InlineKeyboardButton("sᴛᴀᴛs", callback_data="stats"), InlineKeyboardButton("Settings", callback_data="OpenSettings")],
-    [InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", url="https://t.me/juktijol"), InlineKeyboardButton("JuktiJol", url="https://t.me/juktijol")]])
+    [InlineKeyboardButton("📖 How to Use", callback_data="how_to_use"),
+     InlineKeyboardButton("📋 Commands", callback_data="commands_list")],
+    [InlineKeyboardButton("⚙️ Settings", callback_data="OpenSettings"),
+     InlineKeyboardButton("📊 Stats", callback_data="stats")],
+    [InlineKeyboardButton("👨‍💻 Developer", url="https://t.me/juktijol"),
+     InlineKeyboardButton("📢 Channel", url="https://t.me/juktijol")]])
+
+
+def get_start_text(mention=None):
+    greeting = f"👋 <b>Welcome, {mention}!</b>" if mention else "<b>🏠 Home</b>"
+    return (
+        f"{greeting}\n\n"
+        f"I'm a <b>Video Encoder Bot</b> — I can compress and encode your videos "
+        f"with custom quality, codec, and audio settings.\n\n"
+        f"<b>Quick Start:</b>\n"
+        f"1️⃣ Send me a video file or document\n"
+        f"2️⃣ The bot will automatically start encoding\n"
+        f"3️⃣ Get your compressed video back!\n\n"
+        f"Tap <b>📖 How to Use</b> below for a full guide."
+    )
 
 
 async def check_chat(message, chat):

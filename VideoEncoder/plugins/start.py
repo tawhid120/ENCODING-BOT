@@ -17,7 +17,7 @@ from .. import botStartTime, download_dir, encode_dir
 from ..utils.database.access_db import db
 from ..utils.database.add_user import AddUserToDatabase
 from ..utils.display_progress import TimeFormatter, humanbytes
-from ..utils.helper import check_chat, delete_downloads, start_but
+from ..utils.helper import check_chat, delete_downloads, get_start_text, start_but
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -33,7 +33,7 @@ async def start_message(app, message):
     if not c:
         return
     await AddUserToDatabase(app, message)
-    text = f"Hi {message.from_user.mention()}<a href='https://ibb.co/RGx4RmDg'>!</a> I'm VideoEncoder Bot which will do magic with your file."
+    text = get_start_text(message.from_user.mention())
     await message.reply(text=text, reply_markup=start_but)
 
 
@@ -43,34 +43,39 @@ async def help_message(app, message):
     if not c:
         return
     await AddUserToDatabase(app, message)
-    msg = """<b>📕 Commands List</b>:
+    msg = """<b>📕 Commands List</b>
 
-- Autodetect Telegram File.
-- /ddl - encode through DDL
-- /batch - encode in batch
-- /queue - check queue
-- /settings - settings
-- /vset - view settings
-- /reset - reset settings
-- /stats - cpu stats
+<b>📹 Encoding Commands:</b>
+• Send a video file → auto encode
+• /dl - Encode a Telegram video (reply to file)
+• /ddl - Encode from a direct download link
+• /batch - Encode multiple files from a link
+• /af - Rearrange audio tracks (reply to file)
 
-For Sudo:
-- /exec - Execute Python
-- /sh - Execute Shell
-- /vupload - video upload
-- /dupload - doc upload
-- /gupload - drive upload
-- /update - git pull
-- /restart - restart bot
-- /clean - clean junk
-- /clear - clean queue
-- /logs - view logs
+<b>⚙️ Settings Commands:</b>
+• /settings - Open encoding settings
+• /vset - View your current settings
+• /reset - Reset all settings to default
 
-For Owner:
-- /addchat and /addsudo
-- /rmsudo and /rmchat
+<b>📊 Info Commands:</b>
+• /queue - Check encoding queue
+• /stats - View bot & system stats
 
-Supports: <a href='https://t.me/juktijol'>click here</a>"""
+<b>👑 Sudo Commands:</b>
+• /exec - Execute Python code
+• /sh - Execute Shell command
+• /vupload - Upload as video
+• /dupload - Upload as document
+• /gupload - Upload to Google Drive
+• /update - Update bot from git
+• /restart - Restart the bot
+• /clean - Clean temporary files
+• /clear - Clear encoding queue
+• /logs - View bot logs
+
+<b>👤 Owner Commands:</b>
+• /addchat & /addsudo - Add chat/sudo user
+• /rmsudo & /rmchat - Remove sudo/chat"""
     await message.reply(text=msg, disable_web_page_preview=True, reply_markup=start_but)
 
 
