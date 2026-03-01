@@ -19,7 +19,7 @@ async def upload_to_tg(new_file, message, msg):
     duration = get_duration(new_file)
 
     # Check file size against Bot Token MTProto limit (50MB)
-    file_size = os.path.getsize(new_file) if os.path.isfile(new_file) else 0
+    file_size = os.path.getsize(new_file)
     if file_size > MAX_UPLOAD_SIZE:
         size_mb = round(file_size / (1024 * 1024), 2)
         LOGGER.warning(f"File {filename} is {size_mb} MB, exceeds 50MB Bot Token limit.")
@@ -27,7 +27,8 @@ async def upload_to_tg(new_file, message, msg):
             f"<b>⚠️ File too large for upload!</b>\n\n"
             f"📦 <b>Size:</b> {size_mb} MB\n"
             f"📏 <b>Limit:</b> 50 MB (Bot Token via MTProto)\n\n"
-            f"Please try a lower resolution or the file is too long to compress under 50MB."
+            f"The compressed file still exceeds the limit. "
+            f"Please try encoding with a lower resolution or bitrate."
         )
         return None
 
